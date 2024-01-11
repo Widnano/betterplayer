@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 import 'dart:async';
+
 import 'package:better_player/src/configuration/better_player_buffering_configuration.dart';
 import 'package:better_player/src/core/better_player_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
 import 'video_player_platform_interface.dart';
 
 const MethodChannel _channel = MethodChannel('better_player_channel');
@@ -228,6 +230,12 @@ class MethodChannelVideoPlayer extends VideoPlayerPlatform {
           <String, dynamic>{'textureId': textureId},
         ) ??
         0;
+
+    // Sometimes the media server returns a absolute position far greater than
+    // the datetime instance can handle. This caps the value to the maximum the datetime
+    // can use.
+    if (milliseconds > 8640000000000000 || milliseconds < -8640000000000000)
+      return null;
 
     if (milliseconds <= 0) return null;
 
