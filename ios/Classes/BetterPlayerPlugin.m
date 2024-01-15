@@ -314,7 +314,7 @@ bool _remoteCommandsInitialized = false;
         if ([argsMap objectForKey:@"maxBufferMs"] != [NSNull null]){
             NSNumber *parseNumber = argsMap[@"maxBufferMs"];
             float maxBufferMs = [parseNumber floatValue] / 1000;
-            [player setBufferDuration:maxBufferMs];
+            // [player setBufferDuration:maxBufferMs];
         }
 
         [self onPlayerSetup:player result:result];
