@@ -763,7 +763,9 @@ class BetterPlayerController {
 
   ///Send player event to all listeners.
   void _postEvent(BetterPlayerEvent betterPlayerEvent) {
-    for (final Function(BetterPlayerEvent)? eventListener in _eventListeners) {
+    /// doing this to allow for unregisteration of an event
+    var localEvents = [..._eventListeners];
+    for (final Function(BetterPlayerEvent)? eventListener in localEvents) {
       if (eventListener != null) {
         eventListener(betterPlayerEvent);
       }
